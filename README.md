@@ -29,9 +29,9 @@ zsh-autosuggestions 과 zsh-syntax-highlighting이 적용됩니다.
 $ bash zsh_install.sh
 ```
 
+<br>
 
-
-# 😀 p10k 스타일 재설정
+## 😀 p10k 스타일 재설정
 
 ```bash
 $ p10k configure
