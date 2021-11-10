@@ -23,6 +23,10 @@
 
 ## 2. install
 
+### theme
+커스텀 테마인 powerlevel10k을 적용했습니다.
+
+### plugin
 zsh-autosuggestions 과 zsh-syntax-highlighting이 적용됩니다.
 
 ```bash
