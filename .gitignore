@@ -10,6 +10,12 @@ calculate_iaa.py
 fleiss.py
 iaa_sample.xlsx
 
+._train
+.gitconfig
+.jupyter/
+.local/
+.profile
+
 ### JupyterNotebooks ###
 # gitignore template for Jupyter Notebooks
 # website: http://jupyter.org/
