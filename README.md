@@ -16,4 +16,6 @@
 Khaiii, Mecab을 간편하게 sh파일 하나로 설치할 수 있습니다.
 
 ### 사용법
-`bash preinstallation.sh`
+
+preinstallation.sh파일과 tmp폴더를 `/opt/ml`에 놓고
+`bash preinstallation.sh`로 실행시키면 됩니다.
