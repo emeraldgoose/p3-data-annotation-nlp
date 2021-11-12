@@ -10,3 +10,10 @@
 6. `dvc remote add --default gdrive://{google_drive}`로 gdrive와 연결해준다.
 7. `dvc pull`을 한 후에, gdrive 구글 계정 인증을 해준다.
 8. 데이터 생성!
+
+## 2. preinstallation.sh
+
+Khaiii, Mecab을 간편하게 sh파일 하나로 설치할 수 있습니다.
+
+### 사용법
+'bash preinstallation.sh'
