@@ -16,4 +16,4 @@
 Khaiii, Mecab을 간편하게 sh파일 하나로 설치할 수 있습니다.
 
 ### 사용법
-'bash preinstallation.sh'
+`bash preinstallation.sh`
