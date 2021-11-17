@@ -1,8 +1,13 @@
+# version
+
+**v.1.1** object entity와 subject entity가 바뀌지 않는 버그 수정
+
+
 # Annotator 사용법
 
 > 주의사항 : 주황색 부분만이 수정이 가능한 부분입니다. 주황색 부분 외의 다른 부분을 수정할 시 함수가 손상될 수 있습니다.
 
-1.`Annotator.xltm`파일을 다운로드 받습니다.
+1.`Annotator_v.1.1.xlsm`파일을 다운로드 받습니다.
 
 2. text-entity pair를 맞춘 구글 스프레드 시트(For Relation Tagging)에서 데이터를 긁어와 `Annotator.xltm` 파일의 `DataBase` sheet에 붙여넣기 해줍니다.
 
