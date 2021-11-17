@@ -1,21 +1,11 @@
-# data-annotation-nlp-level3-nlp-10
+# Annotator 사용법
 
-## 1. DVC 설치
+> 주의사항 : 주황색 부분만이 수정이 가능한 부분입니다. 주황색 부분 외의 다른 부분을 수정할 시 함수가 손상될 수 있습니다.
 
-1. [dvc github](https://github.com/iterative/dvc/releases) 에서 `dvc_2.8.2_amd64.deb` 다운로드
-2. `apt install ./dvc_2.8.2_amd64.deb`을 통해 package 설치
-3. `git remote add {github_path}`로 git을 연결해준다.
-4. `git pull`로 git을 가져온다.
-5. `git checkout {dataset 브랜치}`로 checkout 한다
-6. `dvc remote add --default gdrive://{google_drive}`로 gdrive와 연결해준다.
-7. `dvc pull`을 한 후에, gdrive 구글 계정 인증을 해준다.
-8. 데이터 생성!
-
-## 2. preinstallation.sh
-
-Khaiii, Mecab을 간편하게 sh파일 하나로 설치할 수 있습니다.
-
-### 사용법
-
-preinstallation.sh파일과 tmp폴더를 `/opt/ml`에 놓고
-`bash preinstallation.sh`로 실행시키면 됩니다.
+1.`Annotator.xltm`파일을 다운로드 받습니다.
+2. text-entity pair를 맞춘 구글 스프레드 시트(For Relation Tagging)에서 데이터를 긁어와 `Annotator.xltm` 파일의 `DataBase` sheet에 붙여넣기 해줍니다.
+3. 우측 상단의 id 오른쪽 주황색 부분에 숫자를 입력해준 후, `refresh` 버튼을 누릅니다.
+4. 우측 하단의 `relation`을 숫자로 입력해 준 후, 좌측에서 `sum`을 통해 관계가 맞는지 확인해줍니다.
+- 만약 관계가 맞지 않다면 subject와 object의 주황색 부분을 올바르게 수정해줍니다.
+- 그런 후, `remark`를 통해 에러코드를 입력해줍니다.
+5. 수정이 완료되면 `save` 버튼을 눌러줍니다.
