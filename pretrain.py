@@ -1,7 +1,7 @@
 import gc
 
 import torch
-from transformers import Trainer, TrainingArguments, BertConfig, BertTokenizer, BertForMaskedLM
+from transformers import Trainer, TrainingArguments, BertConfig, BertTokenizer, BertForMaskedLM, AutoTokenizer, AutoConfig
 
 from tokenizers.implementations import BertWordPieceTokenizer
 
@@ -58,7 +58,8 @@ def preprocessing(dataset):
             if not (0 <= words[i] <= 4):
                 maxlen = max(maxlen, i)
 
-        masked_idx = torch.randint(size=(3,), low=1, high=maxlen)
+        masked_idx = torch.randint(
+            size=(int((maxlen-1)*0.15*0.8),), low=1, high=maxlen)
         tmp = words.clone().detach()
         label.append(tmp)
 
@@ -75,7 +76,7 @@ def tokenized_dataset(dataset, tokenizer):
         return_tensors='pt',
         padding=True,
         truncation=True,
-        max_length=200,
+        max_length=256,
         add_special_tokens=True,
     )
     return tokenized_sentence
@@ -87,6 +88,8 @@ def make_dataset(tokenizer):
         dataset = f.read()
         dataset = dataset.split('\n')
         dataset = [line.strip() for line in dataset]
+        dataset += dataset
+        dataset += dataset
 
     dataset = tokenized_dataset(dataset, tokenizer)
 
@@ -107,14 +110,13 @@ def train(dataset, model, tokenizer, training_args):
 
     trainer.train()
     trainer.save_model(output_dir='./models')
-    trainer.save_state()
+    # trainer.save_state()
 
 
 def main():
     """ Bert base pretraining """
 
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-    # device = torch.device('cpu')
     print(device)
 
     # run garbage collect, empty_cache()
@@ -125,16 +127,12 @@ def main():
     # tokenizer_train()
 
     # # training 준비
-    config = BertConfig(
-        vocab_size=7243,
-        max_position_embeddings=512,
-        architectures=["BertForMaskedLM"]
-    )
+    config = BertConfig.from_pretrained('emeraldgoose/bert-base-v1-sports')
 
     # config.save_pretrained('./')  # save config.json
 
-    tokenizer = BertTokenizer(vocab_file='./vocab.txt', do_lower_case=False)
-    tokenizer.model_max_length = 512
+    tokenizer = AutoTokenizer.from_pretrained(
+        'emeraldgoose/bert-base-v1-sports')
 
     # tokenizer.save_pretrained('./')  # save tokenizer_config.json
 
@@ -143,21 +141,37 @@ def main():
     model.to(device)
 
     training_args = TrainingArguments(
-        num_train_epochs=3,
+        num_train_epochs=80,
         do_train=True,
         output_dir='./results/',
         learning_rate=5e-5,
-        logging_steps=1,
-        per_device_train_batch_size=8,
+        logging_steps=10,
+        per_device_train_batch_size=128,
     )
 
     # make datasets
     dataset = make_dataset(tokenizer)
-
+    print(f'data length = {len(dataset)}')
     # train
     train(dataset=dataset, model=model,
           tokenizer=tokenizer, training_args=training_args)
 
 
+def evalution():
+    tokenizer = AutoTokenizer.from_pretrained('./models')
+    config = AutoConfig.from_pretrained('./models')
+    model = BertForMaskedLM.from_pretrained('./models', config=config)
+
+    text = "산악 자전거 경기는 상대적으로 [MASK] 경기로 1990년대에 활성화 되었다."
+    print([tokenizer.decode(token) for token in tokenizer.encode(text)])
+    inputs = tokenizer.encode(text, return_tensors='pt')
+
+    model.eval()
+    outputs = model(inputs)['logits']
+    predict = outputs.argmax(-1)
+    print([tokenizer.decode(iter) for iter in predict])
+
+
 if __name__ == "__main__":
     main()
+    evalution()
