@@ -1,9 +1,4 @@
-# version
-
-**v.1.1** object entity와 subject entity가 바뀌지 않는 버그 수정
-
-
-# Annotator 사용법
+## Annotator 사용법
 
 > 주의사항 : 주황색 부분만이 수정이 가능한 부분입니다. 주황색 부분 외의 다른 부분을 수정할 시 함수가 손상될 수 있습니다.
 
@@ -19,3 +14,23 @@
 - 그런 후, `remark`를 통해 에러코드를 입력해줍니다.
 
 5. 수정이 완료되면 `save` 버튼을 눌러줍니다.
+
+## Huggingface BERT Pretraining
+BertForMaskedLM 모델과 BertWordPieceTokenizer를 불러와 확보한 문장을 사전학습시켜 허깅페이스에 업로드했습니다.
+- [https://huggingface.co/emeraldgoose/bert-base-v1-sports](https://huggingface.co/emeraldgoose/bert-base-v1-sports)
+
+### How to use
+```python
+from transformers import AutoTokenizer, BertForMaskedLM
+
+model = BertForMaskedLM.from_pretrained("emeraldgoose/bert-base-v1-sports")
+tokenizer = AutoTokenizer.from_pretrained("emeraldgoose/bert-base-v1-sports")
+
+text = "산악 자전거 경기는 상대적으로 새로운 [MASK] 1990년대에 활성화 되었다."
+inputs = tokenizer.encode(text, return_tensors='pt')
+
+model.eval()
+outputs = model(inputs)['logits']
+predict = outputs.argmax(-1)[0]
+print(tokenizer.decode(predict))
+```
