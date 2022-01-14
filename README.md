@@ -34,3 +34,5 @@ outputs = model(inputs)['logits']
 predict = outputs.argmax(-1)[0]
 print(tokenizer.decode(predict))
 ```
+### Blog
+- [https://emeraldgoose.github.io/boostcamp/huggingface-upload-model/](https://emeraldgoose.github.io/boostcamp/huggingface-upload-model/)
